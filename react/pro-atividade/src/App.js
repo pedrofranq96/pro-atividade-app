@@ -1,36 +1,67 @@
+import {useState} from 'react';
+import AtividadeForm from './components/AtividadeForm';
+import AtividadesLista  from './components/AtividadesLista';
 import './App.css';
 
-function App() {
-  const atividades = [
+let initialState = [
     {
        id: 1,
+       prioridade: '1',
+       titulo: 'teste',
        descricao: 'Primeira atividade',
     },
     {
       id: 2,
+      prioridade: '2',
+      titulo: 'teste',
       descricao: 'Segunda atividade',
-   }
+   },
+   {
+    id: 3,
+    prioridade: '3',
+    titulo: 'teste',
+    descricao: 'Terceira atividade',
+    }
   ];
 
 
+
+function App() {
+  const [atividades, setAtividades] = useState(initialState)
+
+
+  function addAtividade(e){
+    e.preventDefault();
+
+
+    const atividade = {      
+        id: document.getElementById('id').value,
+        prioridade: document.getElementById('prioridade').value,
+        titulo: document.getElementById('titulo').value,
+        descricao: document.getElementById('descricao').value,
+    }
+   
+     setAtividades([...atividades, {...atividade}]);
+  }
+    
+  function deletarAtividade(id){
+    const atividadesFiltradas = atividades.filter(atividade => atividade.id !== id);
+    setAtividades([...atividadesFiltradas]);
+  }
+  
+ 
+
   return (
     <>
-      <form>
-        <input id="id" type="text" placeholder="id"/>
-        <input id="descricao" type="text" placeholder="descricao"/>
-        <button>+ Atividade</button>
-      </form>
-        <div className="mt-3">      
-          <ul className="list-group">
-            {atividades.map(ativ=>(
-              <li key={ativ.id} className="list-group-item">{ativ.id} - {ativ.descricao}</li>
-            ))}
-              
-          </ul>
-        </div>
-    </>
-    
-   
+      <AtividadeForm 
+        addAtividade={addAtividade}
+        atividades={atividades}
+      />
+       <AtividadesLista
+          atividades={atividades}
+          deletarAtividade = {deletarAtividade}
+       />  
+    </>     
   );
 }
 
