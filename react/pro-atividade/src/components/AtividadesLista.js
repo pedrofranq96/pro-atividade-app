@@ -9,6 +9,7 @@ export default function AtividadesLista(props) {
                 <Atividade key={ativ.id} 
                   ativ = {ativ}
                   deletarAtividade = {props.deletarAtividade}
+                  pegarAtividade = {props.pegarAtividade}
                 />
             ))}
     </div>    

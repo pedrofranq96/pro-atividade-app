@@ -1,66 +1,58 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import AtividadeForm from './components/AtividadeForm';
 import AtividadesLista  from './components/AtividadesLista';
 import './App.css';
 
-let initialState = [
-    {
-       id: 1,
-       prioridade: '1',
-       titulo: 'teste',
-       descricao: 'Primeira atividade',
-    },
-    {
-      id: 2,
-      prioridade: '2',
-      titulo: 'teste',
-      descricao: 'Segunda atividade',
-   },
-   {
-    id: 3,
-    prioridade: '3',
-    titulo: 'teste',
-    descricao: 'Terceira atividade',
-    }
-  ];
-
-
 
 function App() {
-  const [atividades, setAtividades] = useState(initialState)
+  const [index,setIndex] = useState(0);
+  const [atividades, setAtividades] = useState([]);
+  const [atividade, setAtividade] = useState({id: 0});
 
+  useEffect(()=>{
+    atividades.length <= 0 ? setIndex(1) : 
+    setIndex( Math.max.apply(Math,atividades.map((item)=> item.id)) + 1)
+  }, [atividades])
 
-  function addAtividade(e){
-    e.preventDefault();
+  function addAtividade(ativ){      
+    
+    setAtividades([...atividades, 
+      { ...ativ, id: index}]
+    );
+  }
 
-
-    const atividade = {      
-        id: document.getElementById('id').value,
-        prioridade: document.getElementById('prioridade').value,
-        titulo: document.getElementById('titulo').value,
-        descricao: document.getElementById('descricao').value,
-    }
-   
-     setAtividades([...atividades, {...atividade}]);
+  function cancelarAtividade(){
+    setAtividade({id: 0})
+  }
+  function atualizarAtividade(ativ){
+    setAtividades(atividades.map(item => item.id === ativ.id ? ativ : item));
+    setAtividade({id: 0})
   }
     
   function deletarAtividade(id){
-    const atividadesFiltradas = atividades.filter(atividade => atividade.id !== id);
+    const atividadesFiltradas = atividades.filter((atividade)=> atividade.id !== id);
     setAtividades([...atividadesFiltradas]);
+  } 
+
+  function pegarAtividade(id){
+    const atividade = atividades.filter((atividade)=> atividade.id === id);
+    setAtividade(atividade[0]);
   }
-  
- 
 
   return (
     <>
       <AtividadeForm 
         addAtividade={addAtividade}
+        cancelarAtividade={cancelarAtividade}
+        atualizarAtividade={atualizarAtividade}
+        ativSelecionada ={atividade}
         atividades={atividades}
       />
        <AtividadesLista
           atividades={atividades}
-          deletarAtividade = {deletarAtividade}
-       />  
+          deletarAtividade = {deletarAtividade}    
+          pegarAtividade = {pegarAtividade} 
+        />  
     </>     
   );
 }
