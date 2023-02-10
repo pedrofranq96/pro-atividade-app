@@ -40,6 +40,7 @@ namespace ProAtividadeAPI
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProAtividadeAPI", Version = "v1" });
 			});
+			services.AddCors();
 		}
 
 	
@@ -57,6 +58,7 @@ namespace ProAtividadeAPI
 			app.UseRouting();
 
 			app.UseAuthorization();
+			app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()); //config para liberar a api no front
 
 			app.UseEndpoints(endpoints =>
 			{

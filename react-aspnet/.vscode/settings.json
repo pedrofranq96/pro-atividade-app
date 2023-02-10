@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Pro atividade",
+            "database": "${workspaceFolder:react-aspnet}/back/src/ProAtividadeAPI/ProAtividadeAPI/ProatividadeAPI.db"
+        }
+    ]
+}
