@@ -1,19 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ProAtividadeAPI.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Proatividade.Data.Repositories;
+using ProAtividade.Data.Context;
+using ProAtividade.Domain.Interfaces.Repositories;
+using ProAtividade.Domain.Interfaces.Services;
+using ProAtividade.Domain.Services;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace ProAtividadeAPI
 {
@@ -30,8 +27,13 @@ namespace ProAtividadeAPI
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<DataContext>(
-				options => options.UseSqlite(Configuration.GetConnectionString("Default"))
-				) ;
+				options => options.UseSqlServer(Configuration.GetConnectionString("Default"))
+				);
+
+			services.AddScoped<IAtividadeRepo, AtividadeRepo>();
+			services.AddScoped<IAtividadeService, AtividadeService>();
+			services.AddScoped<IGeneralRepo, GeneralRepo>();
+			
 			services.AddControllers().AddJsonOptions(options => 
 			{
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
