@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\react-aspnet",
+    "\\react-aspnet\\back",
+    "\\react-aspnet\\back\\src",
+    "\\react-aspnet\\back\\src\\ProAtividadeAPI",
+    "\\react-aspnet\\back\\src\\ProAtividadeAPI\\Data",
+    "\\react-aspnet\\back\\src\\ProAtividadeAPI\\Data\\Proatividade.Data",
+    "\\react-aspnet\\back\\src\\ProAtividadeAPI\\Domain",
+    "\\react-aspnet\\back\\src\\ProAtividadeAPI\\Domain\\ProAtividade.Domain",
+    "\\react-aspnet\\back\\src\\ProAtividadeAPI\\ProAtividadeAPI"
+  ],
+  "SelectedNode": "\\react-aspnet\\back\\src\\ProAtividadeAPI\\ProAtividadeAPI\\ProAtividadeAPI.csproj",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,26 +1,48 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace ProAtividadeAPI
+builder.Services.AddDbContext<DataContext>(
+	options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddScoped<IAtividadeRepo, AtividadeRepo>();
+builder.Services.AddScoped<IAtividadeService, AtividadeService>();
+builder.Services.AddScoped<IGeneralRepo, GeneralRepo>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			CreateHostBuilder(args).Build().Run();
-		}
+	options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
-		public static IHostBuilder CreateHostBuilder(string[] args) =>
-			Host.CreateDefaultBuilder(args)
-				.ConfigureWebHostDefaults(webBuilder =>
-				{
-					webBuilder.UseStartup<Startup>();
-				});
-	}
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+	c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProAtividadeAPI", Version = "v1" });
+});
+builder.Services.AddCors();
+
+
+
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+	app.UseDeveloperExceptionPage();
+	app.UseSwagger();
+	app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProAtividadeAPI v1"));
 }
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()); //config para liberar a api no front
+
+app.MapControllers();
+
+app.Run();
+
+
