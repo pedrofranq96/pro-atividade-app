@@ -1,8 +1,8 @@
 import React from 'react';
-import TitlePage from '../../components/TitlePage';
 import { Card, Row, Col } from 'react-bootstrap';
+import TitlePage from './../../components/TitlePage';
 
-export default function Dashboard() {
+const Dashboard: React.FC =() =>{
     return (
         <>
             <TitlePage title='Dashboard' />
@@ -20,7 +20,7 @@ export default function Dashboard() {
                     </Col>
                     <Col>
                         <Card border='secondary'>
-                            <Card.Header bg={'danger'}>
+                            <Card.Header>
                                 Atividades totais
                             </Card.Header>
                             <Card.Body>
@@ -55,3 +55,7 @@ export default function Dashboard() {
         </>
     );
 }
+
+
+
+export default Dashboard;

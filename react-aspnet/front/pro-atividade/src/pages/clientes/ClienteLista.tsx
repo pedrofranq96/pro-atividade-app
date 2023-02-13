@@ -1,6 +1,6 @@
 import { FormControl, InputGroup, Button } from 'react-bootstrap';
 import TitlePage from '../../components/TitlePage';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -41,17 +41,16 @@ const clientes = [
     situacao: 'desativado'
   },
 ]
-export default function ClienteLista() {
+const ClienteLista =()=> {
   const navigate = useNavigate();
   const [termoBusca, setTermoBusca] = useState('');
 
-  const handleInputChange = (e) =>{
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
     setTermoBusca(e.target.value);    
   }
 
   const clientesFiltrados = clientes.filter((cliente) => {
-    // return cliente.nome.toLocaleLowerCase().indexOf(termoBusca) !== -1 || 
-    // cliente.responsavel.toLocaleLowerCase().indexOf(termoBusca) !== -1
+    
     return  (
       Object.values(cliente).join(' ').toLowerCase().includes(termoBusca.toLowerCase())
     );
@@ -119,3 +118,6 @@ export default function ClienteLista() {
     </>
   )
 }
+
+
+export default ClienteLista;

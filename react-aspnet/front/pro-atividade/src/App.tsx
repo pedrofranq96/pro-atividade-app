@@ -6,13 +6,14 @@ import ClienteForm from './pages/clientes/ClienteForm';
 import Dashboard from './pages/dashboard/Dashboard';
 import PageNotFound from './pages/PageNotFound';
 
-export default function App() {
+const App:React.FC =() =>{
   
   return (
     <Routes>
-      <Route path='/'  element={<Dashboard/>}/>
-      <Route path='/atividade/lista' element={<Atividade/>}/>
-      <Route path='/cliente/lista' element={<Cliente/>}/>
+      <Route path='/' element={<Dashboard/>}/>
+      <Route path='/atividade/*' element={<Atividade/>}/>
+      <Route path='/atividade/:id/cliente' element={<Atividade/>}/>
+      <Route path='/cliente/*' element={<Cliente/>}/>
       <Route path='/cliente/:id/atividade' element={<Atividade/>}/>
       <Route path='/cliente/detalhe/' element={<ClienteForm/>}/>
       <Route path='/cliente/detalhe/:id' element={<ClienteForm/>}/>
@@ -21,6 +22,7 @@ export default function App() {
   );
 }
 
+export default App; 
 
 
 
